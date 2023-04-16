@@ -4,7 +4,7 @@ from PIL import Image
 import cv2
 import json
 
-def WatchVideo(video_path):
+def WatchVideo(video_path, frames_count=5):
     # Load the model
     model, _, transform = open_clip.create_model_and_transforms(
         model_name="coca_ViT-L-14",
@@ -26,7 +26,7 @@ def WatchVideo(video_path):
     captions = []
 
     # Loop through every 5th frame of the video
-    for i in range(0, total_frames, 5):
+    for i in range(0, total_frames, frames_count):
         # Set the video capture to the current frame
         cap.set(cv2.CAP_PROP_POS_FRAMES, i)
         
