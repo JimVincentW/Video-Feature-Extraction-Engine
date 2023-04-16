@@ -6,7 +6,7 @@ import cv2
 import json
 
 # Load the OpenAI API key
-openai.api_key = "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"
+openai.api_key = "/Users/jimvincentwagner/tests/video_1677841652_k9Wj4Wkr2c.mp4"
 
 # Load the CLIP model
 model, _, transform = open_clip.create_model_and_transforms(
@@ -15,7 +15,7 @@ model, _, transform = open_clip.create_model_and_transforms(
 )
 
 # Define the video path
-video_path = "/Users/jimvincentwagner/tests/video_1678368691_rU8qmpT9c2.mp4"
+video_path = "/Users/jimvincentwagner/tests/video_1680602199_RFREfQhFxQ.mp4"
 
 # Open the video capture
 cap = cv2.VideoCapture(video_path)
@@ -73,19 +73,18 @@ with open("output.json", "r") as f:
 prompt_lines = "\n".join(captions)
 
 # Set up OpenAI Chat Completion API parameters
-MODEL = "gpt-3.5-turbo"
+MODEL = "gpt-3.5-turbo-0301"
 
 response = openai.ChatCompletion.create(
     model=MODEL,
     messages=[
         {"role": "system", "content": "You are aiding in categorizing Videos." },
-        {"role": "user", "content": "The following Lines are the captions that Computer Vision Information Retrieval model outputs. The Intention is to categorize and label the video. Provide 5 hashtags for it. Just the regular ones of a social media app. Also Place it into one of the categories and give it the Label: 1. Sports , 2. User-generated content, Private Event, 5. Outside with people, 6. inside of the appartment . Explain."},
+        {"role": "user", "content": "The following Lines are the captions that Computer Vision Information Retrieval model outputs. The Intention is to categorize and label the video. Provide 5 hashtags for it. Just the regular ones of a social media app. Also Place it into one of the categories: 1. Sports , 2. User-generated content, Private Event, 5. Outside with people, 6. inside of the appartment . Explain."},
         {"role": "assistant", "content": "Okay, so what are the captions?"},
         {"role": "user", "content": "Captions:\n\n" + prompt_lines},
+        {"role": "system", "content": "Now filter everything tha is not a hashtag and more likely just because the vision model just randomly picked up on it."},
     ],
     temperature=0,
 )
 
-# Print the response from OpenAI Chat Completion
-print(response['choices'][0]['message']['content'])
-
+print(response.choices[0]["message"]["content"])

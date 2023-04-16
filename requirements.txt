@@ -3,3 +3,5 @@ torch
 Pillow
 opencv-python
 openai
+pydub
+moviepy
