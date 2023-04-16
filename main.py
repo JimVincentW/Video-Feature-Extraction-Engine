@@ -6,7 +6,7 @@ import cv2
 import json
 
 # Load the OpenAI API key
-openai.api_key = "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"
+openai.api_key = "xxx"
 
 # Load the CLIP model
 model, _, transform = open_clip.create_model_and_transforms(
