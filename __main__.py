@@ -11,14 +11,20 @@ from VID2AUD import vid2aud
 from openai_chat import generate_openai_chat_response
 from audio_environmental_sounds import lemme_see
 from audio_transcript import transcribe_audio
+from audio_song import shazam
+import time
+import asyncio
 
 
-VIDEO = "/Users/jimvincentwagner/tests/TestShort.mp4"
+VIDEO = "/Users/jimvincentwagner/tests/Y2Mate.is - talk&text  win vs ginebra gmae 4.#video#shortsfeed#amazing#satisfying#basketball--PtIs03wULc-720p-1657302317151.mp4"
 SCAN_FPS = 50
 CLASSES_N = 3
 
 
-def main():
+
+async def main():
+    start_time = time.time()
+
     # Define the video path for downstream processing
     video_path = VIDEO
 
@@ -40,6 +46,14 @@ def main():
     # Transcribe Text to Speech
     transcribed_audio = transcribe_audio(audio)
 
+    # Shazam the audio
+    shazam_audio = await shazam(audio)
+    '''if shazam_audio == "No song found":
+        title = "No song found"
+    else:
+        title = shazam_audio['track']['title']'''
+    print(shazam_audio)
+
     # Check the audio transcription
     print("Subtitles:" + transcribed_audio)
 
@@ -52,5 +66,8 @@ def main():
     os.remove("output.json")
     os.remove("output.mp3")
 
+    end_time = time.time()
+    print("Time taken: {} seconds".format(end_time - start_time))
+
 if __name__ == "__main__":
-    main()
+    asyncio.run(main())

@@ -1,11 +1,12 @@
 import asyncio
 from shazamio import Shazam
 
-
-async def main():
-  shazam = Shazam()
-  out = await shazam.recognize_song('dora.ogg')
-  print(out)
-
-loop = asyncio.get_event_loop()
-loop.run_until_complete(main())
+async def shazam(audio):
+    loop = asyncio.get_event_loop()
+    shazam_client = Shazam()
+    
+    out = await shazam_client.recognize_song(audio)
+    if out["matches"] is None:
+        return "No song found"
+    else:
+        return out

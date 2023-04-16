@@ -5,9 +5,8 @@ def transcribe_audio(audio):
 
     # load audio and pad/trim it to fit 30 seconds
     audio = whisper.load_audio("output.mp3")
-    result = model.transcribe(audio)
+    result = model.transcribe(audio, fp16=False)
     subtitles = result["text"]
-    print(subtitles)
     
     # if item is NoneType
     if subtitles is None:

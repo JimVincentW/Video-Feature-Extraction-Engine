@@ -3,6 +3,9 @@ import torch
 from PIL import Image
 import cv2
 import json
+#from ocr import ocr
+#from mmocr.apis import MMOCRInferencer
+
 
 def WatchVideo(video_path, frames_count=5):
     # Load the model
@@ -50,6 +53,11 @@ def WatchVideo(video_path, frames_count=5):
         
         # Append the caption to the list
         captions.append(caption)
+
+        '''ocr = MMOCRInferencer(det="DB_r18", rec="MASTER")
+        result = ocr(frame)
+        recognized_text = result["predictions"][0]["rec_texts"]
+        print(recognized_text)'''
         
         # Print the progress
         print(f"Processed frame {i+1} of {total_frames}")
